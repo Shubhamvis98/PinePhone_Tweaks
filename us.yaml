@@ -7,9 +7,6 @@ outlines:
     spaceline: { width: 203, height: 70 }
     funkeys: { width: 65, height: 70 }
 
-    menu: { width: 98, height: 64 }
-    action: { width: 48, height: 64 }
-
 views:
     base:
         - "Esc Tab Ctrl Alt topdash ↓ ↑ ← →"
@@ -40,7 +37,7 @@ views:
         - "F1 F2 F3 F4 F5 F6 Insert Home PgUp"
         - "F7 F8 F9 F10 F11 F12 Delete End PgDn"
         - "Super Print Pause « »"
-        - "Base MinSpace Return"
+        - "Base MinSpace Menu Return"
 
 
 buttons:
@@ -184,18 +181,15 @@ buttons:
         outline: "funkeys"
     "»":
         outline: "funkeys"
-    Preferences:
-        action: "show_prefs"
-        outline: "special"
-        icon: "keyboard-mode-symbolic"
-
-
     Menu:
-        outline: "menu"
+        outline: "funkeys"
         keysym: "Menu"
     Base:
         action:
             set_view: "base"
         outline: "special"
         label: "abc"
-
+    Preferences:
+        action: "show_prefs"
+        outline: "special"
+        icon: "keyboard-mode-symbolic"
