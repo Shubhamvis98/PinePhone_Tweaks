@@ -19,7 +19,7 @@ views:
         - "Q W E R T Y U I O P"
         - "A S D F G H J K L"
         - "Shift Z X C V B N M BackSpace"
-        - "Nums $ Space / Return"
+        - "Nums Preferences $ Space / FunKeys Return"
     nums:
         - "Esc Tab Ctrl Alt topdash ↓ ↑ ← →"
         - "# $ & _ - 1 2 3 ?"
@@ -38,7 +38,6 @@ views:
         - "F7 F8 F9 F10 F11 F12 Delete End PgDn"
         - "Super Print Pause « »"
         - "Base MinSpace Menu Return"
-
 
 buttons:
     Tab:
