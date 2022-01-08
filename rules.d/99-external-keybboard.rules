@@ -1,0 +1,2 @@
+ACTION=="add", DRIVERS=="usb", ATTRS{manufacturer}=="MOSART Semi.", RUN+="/bin/su mobian -c 'gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false; gsettings set org.gnome.desktop.session idle-delay 600'"
+ACTION=="remove", DRIVERS=="usb", ATTRS{manufacturer}=="MOSART Semi.", RUN+="/bin/su mobian -c 'gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true; gsettings set org.gnome.desktop.session idle-delay 60'"

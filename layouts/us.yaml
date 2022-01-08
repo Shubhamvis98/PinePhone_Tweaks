@@ -9,7 +9,7 @@ outlines:
 
 views:
     base:
-        - "Esc Tab Ctrl Alt topdash ↓ ↑ ← →"
+        - "Esc Tab Ctrl Alt topdash ← → ↓ ↑"
         - "q w e r t y u i o p"
         - "a s d f g h j k l"
         - "Shift z x c v b n m BackSpace"
