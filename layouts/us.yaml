@@ -23,13 +23,13 @@ views:
     nums:
         - "Esc Tab Ctrl Alt topdash ↓ ↑ ← →"
         - "# $ & _ - 1 2 3 ?"
-        - "µ ( ) = + 4 5 6 !"
+        - "@ ( ) = + 4 5 6 !"
         - "Symbols ' : % / 7 8 9 BackSpace"
         - "Base \" MinSpace * , 0 . Return"
     symbols:
         - "Esc Tab Ctrl Alt topdash ↓ ↑ ← →"
         - "£ € ¥ ¢ © ® ™ ~ ¿"
-        - "@ [ ] { } < > ^ ¡"
+        - "µ [ ] { } < > ^ ¡"
         - "Nums ` ; ÷ \\ | ¦ ¬ BackSpace"
         - "Base MinSpace ° ¶ § × Return"
     funkeys:
