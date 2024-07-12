@@ -1,0 +1,84 @@
+#!/bin/bash
+
+pkgname=hkdm
+pkgver=0.2.1
+pkgdesc="Lighter-weight hotkey daemon"
+arch=('x86_64' 'aarch64')
+license=('GPL3')
+depends=('gcc-libs' 'libevdev')
+source="https://gitlab.com/postmarketOS/hkdm/-/archive/${pkgver}/${pkgname}-${pkgver}.tar.gz"
+
+srcdir=`pwd`
+export CARGO_HOME=`pwd`/cargo-home
+export RUSTUP_TOOLCHAIN=stable
+export CARGO_TARGET_DIR=target
+
+gencontrol() {
+_arch=$1
+install_size=`du -s ${srcdir}/${pkgname}_${pkgver}_${_arch} | cut -f1`
+
+control="""Package: ${pkgname}
+Version: ${pkgver}
+Architecture: ${_arch}
+Maintainer: Shubham Vishwakarma <ShubhamVis98>
+Installed-Size: ${install_size}
+Depends:
+Section:
+Priority: optional
+Homepage: https://gitlab.com/postmarketOS/hkdm
+Description: ${pkgdesc}
+ Contributor: Adam Thiede <me@adamthiede.com>
+ Contributor: Caleb Connolly <caleb@connolly.tech>
+ https://git.alpinelinux.org/aports/tree/community/hkdm/APKBUILD"""
+
+mkdir -p ${srcdir}/${pkgname}_${pkgver}_${_arch}/DEBIAN
+echo "${control}" | sed 's/x86_64/amd64/g' > ${srcdir}/${pkgname}_${pkgver}_${_arch}/DEBIAN/control
+}
+
+prepare() {
+  wget ${source}
+  tar -xpf ${pkgname}-${pkgver}.tar.gz
+  cd "${pkgname}-${pkgver}"
+
+  mkdir .cargo
+  cat <<'eof'> .cargo/config.toml
+[target.aarch64-unknown-linux-gnu]
+linker = "aarch64-linux-gnu-gcc"
+eof
+
+  for _arch in ${arch[@]}
+  do
+      rustup target add "${_arch}-unknown-linux-gnu"
+      cargo fetch --target "${_arch}-unknown-linux-gnu"
+  done
+
+  cd ${srcdir}
+}
+
+build() {
+  cd ${pkgname}-${pkgver}
+
+  for _arch in ${arch[@]}
+  do
+      cargo build --frozen --target "${_arch}-unknown-linux-gnu" --release --all-features
+  done
+
+  cd ${srcdir}
+}
+
+pack() {
+  cd ${pkgname}-${pkgver}
+
+  for _arch in ${arch[@]}
+  do
+    install -Dm755 target/${_arch}-unknown-linux-gnu/release/${pkgname} ${srcdir}/${pkgname}_${pkgver}_${_arch}/usr/bin/${pkgname}
+    install -Dm644 ${pkgname}.example.toml ${srcdir}/${pkgname}_${pkgver}_${_arch}/etc/${pkgname}/config.d/${pkgname}.toml.example
+    install -Dm644 ${srcdir}/${pkgname}.service ${srcdir}/${pkgname}_${pkgver}_${_arch}/usr/lib/systemd/system/${pkgname}.service
+    gencontrol ${_arch}
+
+    dpkg-deb --build ${srcdir}/${pkgname}_${pkgver}_${_arch}
+  done
+
+  cd ${srcdir}
+  for i in *x86_64*.deb;do mv $i `echo $i | sed 's/x86_64/amd64/g'`; done
+}

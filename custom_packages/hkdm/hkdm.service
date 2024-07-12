@@ -1,0 +1,11 @@
+[Unit]
+Description=buffyboard
+After=getty.target
+
+[Service]
+ExecStart=hkdm -i -c /etc/hkdm/conf.d/ttyescape.toml
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
